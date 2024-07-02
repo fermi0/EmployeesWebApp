@@ -15,7 +15,7 @@ builder.Services.AddDbContext<StaffDB>();
 builder.Services.AddTransient<IStaffRepository, StaffRepository>();
 builder.Services.AddTransient<EmployeeService>();
 builder.Services.AddTransient<HomeController>();
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<EmployeeService>();
 
 builder.Services.AddCors(opt =>
 {
