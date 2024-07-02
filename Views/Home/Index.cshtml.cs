@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using api.Data;
 using api.Models;
 
-namespace employees_webapp.Views.Home
+namespace EmployeesWebApp.Views.Home
 {
     public class IndexModel : PageModel
     {

@@ -1,5 +1,4 @@
-﻿@using api.Models
-@model IEnumerable<Employee>
+﻿@model IEnumerable<EmployeesDto>
 
 @{
     ViewData["Title"] = "Employees";
@@ -7,20 +6,23 @@
 
 <h1>Employees</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
+<form method="get">
+    <input type="text" name="name" placeholder="Search by name" />
+    <input type="submit" value="Search" />
+</form>
 
+<p>
+    <a asp-controller="Home" asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Address</th>
-            <th>Contact</th>
-            <th>Company</th>
-            <th>Summary</th>
+            <th>@Html.DisplayNameFor(model => model.First().Fname)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Lname)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Address)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Contact)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Company)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Summary)</th>
             <th></th>
         </tr>
     </thead>
@@ -28,19 +30,40 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Id</td>
-                <td>@item.Fname</td>
-                <td>@item.Lname</td>
-                <td>@item.Address</td>
-                <td>@item.Contact</td>
-                <td>@item.Company</td>
-                <td>@item.Summary</td>
+                <td>@Html.DisplayFor(modelItem => item.Fname)</td>
+                <td>@Html.DisplayFor(modelItem => item.Lname)</td>
+                <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                <td>@Html.DisplayFor(modelItem => item.Contact)</td>
+                <td>@Html.DisplayFor(modelItem => item.Company)</td>
+                <td>@Html.DisplayFor(modelItem => item.Summary)</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-controller="Home" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
-<
+</table>
+
+@{
+    var currentPage = ViewData["CurrentPage"] as int? ?? 1;
+    var totalPages = ViewData["TotalPages"] as int? ?? 1;
+}
+
+<nav>
+    <ul class="pagination">
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <a class="page-link" href="?name=@ViewData["SearchTerm"]&pageNumber=@(currentPage - 1)&pageSize=@ViewData["PageSize"]">Previous</a>
+        </li>
+        @for (var i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(i == currentPage ? "active" : "")">
+                <a class="page-link" href="?name=@ViewData["SearchTerm"]&pageNumber=@i&pageSize=@ViewData["PageSize"]">@i</a>
+            </li>
+        }
+        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+            <a class="page-link" href="?name=@ViewData["SearchTerm"]&pageNumber=@(currentPage + 1)&pageSize=@ViewData["PageSize"]">Next</a>
+        </li>
+    </ul>
+</nav>
