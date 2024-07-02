@@ -1,5 +1,6 @@
+using static Global;
 using EmployeesWebApp.Services;
-using api.Models;
+using api.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeesWebApp.Controllers
@@ -13,12 +14,25 @@ namespace EmployeesWebApp.Controllers
             _employeeService = employeeService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string name, int pagenumber = 1, int pagesize = 5)
         {
-            var employees = await _employeeService.GetEmployeesAsync();
+            var employees = await _employeeService.GetEmployeesAsync(name, pagenumber, pagesize);
+            var total = await _employeeService.GetTotal();
+
+            if (employees == null || !employees.Any())
+            {
+                employees = [];
+            }
+
+            ViewData["CurrentPage"] = pagenumber;
+            ViewData["TotalPages"] = (int)Math.Ceiling((double)total / pagesize);
+            ViewData["SearchTerm"] = name;
+            ViewData["PageSize"] = pagesize;
+
             return View(employees);
         }
 
+        // GET: Home/Create
         public IActionResult Create()
         {
             return View();
@@ -26,7 +40,7 @@ namespace EmployeesWebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Employee employee)
+        public async Task<IActionResult> Create(EmployeesDto employee)
         {
             if (ModelState.IsValid)
             {
@@ -50,9 +64,9 @@ namespace EmployeesWebApp.Controllers
             return View(employee);
         }
 
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Employee employee)
+        public async Task<IActionResult> Edit(int id, EmployeesDto employee)
         {
             if (id != employee.Id)
             {
