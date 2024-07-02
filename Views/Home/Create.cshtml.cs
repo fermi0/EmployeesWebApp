@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using api.Data;
 using api.Models;
 
-namespace employees_webapp.Views.Home
+namespace EmployeesWebApp.Views.Home
 {
     public class CreateModel : PageModel
     {
-        private readonly api.Data.StaffDB _context;
+        private readonly StaffDB _context;
 
-        public CreateModel(api.Data.StaffDB context)
+        public CreateModel(StaffDB context)
         {
             _context = context;
         }
