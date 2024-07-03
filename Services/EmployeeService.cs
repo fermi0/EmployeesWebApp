@@ -1,4 +1,5 @@
 ﻿using api.Filters;
+using api.Models;
 using api.DTO;
 using static Global;
 
@@ -32,23 +33,26 @@ namespace EmployeesWebApp.Services
             return employees ?? [];
         }
 
-        public async Task<EmployeesDto?> GetEmployeeByIdAsync(int id)
+        public async Task<Employee?> GetEmployeeByIdAsync(int id)
         {
             HttpResponseMessage response = await _httpClient.GetAsync($"api/employees/{id}");
-            response.EnsureSuccessStatusCode();
-            var employee = await response.Content.ReadFromJsonAsync<EmployeesDto>();
-            return employee;
+            if (response.IsSuccessStatusCode)
+            {
+                var employee = await response.Content.ReadFromJsonAsync<Employee>();
+                return employee;
+            }
+            return null;
         }
 
-        public async Task<bool> CreateEmployeeAsync(EmployeesDto employee)
+        public async Task<bool> CreateEmployeeAsync(CreateStaffDto employee)
         {
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/employees", employee);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateEmployeeAsync(EmployeesDto employee)
+        public async Task<bool> UpdateEmployeeAsync(int id, UpdateStaffDto editDto)
         {
-            HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"api/employees/{employee.Id}", employee);
+            HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"api/employees/{id}", editDto);
             return response.IsSuccessStatusCode;
         }
 
