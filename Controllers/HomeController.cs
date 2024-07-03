@@ -33,6 +33,7 @@ namespace EmployeesWebApp.Controllers
         }
 
         // GET: Home/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -40,7 +41,7 @@ namespace EmployeesWebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EmployeesDto employee)
+        public async Task<IActionResult> Create(CreateStaffDto employee)
         {
             if (ModelState.IsValid)
             {
@@ -53,36 +54,43 @@ namespace EmployeesWebApp.Controllers
             }
             return View(employee);
         }
-
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var employee = await _employeeService.GetEmployeeByIdAsync(id); // Ensure this calls the correct service method
+            var employee = await _employeeService.GetEmployeeByIdAsync(id);
             if (employee == null)
             {
                 return NotFound();
             }
-            return View(employee);
+            // Map the employee data to UpdateStaffDto
+            var editDto = new UpdateStaffDto
+            {
+                Fname = employee.Fname,
+                Lname = employee.Lname,
+                Address = employee.Address,
+                Contact = employee.Contact,
+                Pay = employee.Pay,
+                Company = employee.Company,
+                Summary = employee.Summary
+            };
+            ViewData["EmployeeId"] = employee.Id;
+            return View(editDto);
         }
 
-        [HttpPut]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, EmployeesDto employee)
+        public async Task<IActionResult> Edit(int id, UpdateStaffDto editDto)
         {
-            if (id != employee.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                var success = await _employeeService.UpdateEmployeeAsync(employee); // Ensure this calls the correct service method
+                var success = await _employeeService.UpdateEmployeeAsync(id, editDto); // Ensure this calls the correct service method
                 if (success)
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Details), new {id});
                 }
                 ModelState.AddModelError("", "Unable to update employee.");
             }
-            return View(employee);
+            return View(editDto);
         }
 
         public async Task<IActionResult> Delete(int id)
