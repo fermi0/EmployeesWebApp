@@ -1,7 +1,7 @@
 ﻿@model api.Models.Employee
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Delete Employee";
 }
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
+    <title>Delete Employee</title>
 </head>
 <body>
 
@@ -19,13 +19,13 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fname)
+            First Name
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Fname)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Lname)
+            Last Name
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Lname)
@@ -43,13 +43,13 @@
             @Html.DisplayFor(model => model.Contact)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Pay)
+            Salary
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Pay)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Company)
+            Department
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Company)
