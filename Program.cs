@@ -27,6 +27,8 @@ builder.Services.AddCors(opt =>
 
 var app = builder.Build();
 
+app.Urls.Add("http://localhost:5001"); // Change the port here
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
