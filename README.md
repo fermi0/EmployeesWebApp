@@ -14,7 +14,9 @@ To run this project, clone the repository and also [EmployeesAPI](https://github
 If those packages didn't add automatically then, from NuGet manager Add those packages to the project.
 
 The API project uses SQL 2022 for database, which works only in LAN environment, you should create a database, and edit the connection string to your IP in API. After creating a database name of your choice, run from the root of your project:
+
 `dotnet ef migrations <name of migration>`
+
 `dotnet ef database update`
 
 The above command runs the migration update to create the database table using the reference in API's Models. The first value are NULL, to edit the table, right-click the Tables folder in the SSMS latest version, and click on **edit top 200 rows**. To show the db tables, click on **select top 1000 rows**. You can use my already created database i.e. Employees.bak in API repo if you prefer. To restore you must have SSMS 20.1.10.0 installed.
@@ -32,26 +34,29 @@ Run the web app from visual studio:
 `dotnet watch run`
 
 The web app runs on `https://localhost:5001`. If you used my database, the first page should look like this:
-![[Pasted image 20240704121913.png]]
+![image](https://github.com/fermi6-626/EmployeeWebApp/assets/93081133/53eeebb2-41f3-4334-9161-5dadc8189e9e)
+
 
 The **Details** page takes the Id from the json and finds the id in API then returns the GetID() function from the API to the webapp via the services>EmployeeService.cs and handled via the HomeController in web app:
-![[Pasted image 20240704122337.png]]
+![image](https://github.com/fermi6-626/EmployeeWebApp/assets/93081133/86fd2b7b-1f06-4725-b63f-7d28fb91520c)
+
 
 If you click on **Back to list**, it redirects to homepage. If you click on **Edit**, the page should look like this:
-![[Pasted image 20240704122519.png]]
+![image](https://github.com/fermi6-626/EmployeeWebApp/assets/93081133/5551041d-9284-4bbd-8837-f853f28613e7)
 
 **Save** will save and redirects back to the Details page.
 
 **Search** performs a database search where name = Fname and only show the searched results:
-![[Pasted image 20240704122913.png]]
+![image](https://github.com/fermi6-626/EmployeeWebApp/assets/93081133/70f7cffd-36b1-4b26-a74b-652d9a2b7461)
 
-Clicking on **Home** should get you back in the paginated view of all employees. If you click on **Create**, This page should show up:
-![[Pasted image 20240704123143.png]]
+Clicking on **Home** should get you back in the homepage which is a paginated view of all employees. If you click on **Create**, This page should show up:
+![image](https://github.com/fermi6-626/EmployeeWebApp/assets/93081133/eff15fbf-984b-4bc3-a26a-cdfaad5a6c2e)
 
 After you fill the forms and click on **Create**, you are redirected to the homepage. There you may have to navigate to next page to view the employee you just created.
 
 **Delete** will ask for confirmation handled via different action method, the page should look like this:
-![[Pasted image 20240704123642.png]]
+![image](https://github.com/fermi6-626/EmployeeWebApp/assets/93081133/f72958b8-13cf-4515-854a-aee927ebd28f)
+
 
 Clicking **Delete** will redirect to homepage.
 
