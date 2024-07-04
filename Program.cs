@@ -1,3 +1,4 @@
+// use API's interface, database and repository
 using api.Interfaces;
 using api.Data;
 using static Global;
@@ -9,7 +10,7 @@ var AllowOrigins = "_AllowOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<StaffDB>();
 builder.Services.AddTransient<IStaffRepository, StaffRepository>();
@@ -17,7 +18,7 @@ builder.Services.AddTransient<EmployeeService>();
 builder.Services.AddTransient<HomeController>();
 builder.Services.AddHttpClient<EmployeeService>();
 
-builder.Services.AddCors(opt =>
+builder.Services.AddCors(opt => // cross-origin resource sharing
 {
     opt.AddPolicy(name: AllowOrigins, policy =>
     {
@@ -27,9 +28,9 @@ builder.Services.AddCors(opt =>
 
 var app = builder.Build();
 
-app.Urls.Add("http://localhost:5001"); // Change the port here
+app.Urls.Add("http://localhost:5001"); // uses port different than API
 
-// Configure the HTTP request pipeline.
+// configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
