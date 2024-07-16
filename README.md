@@ -1,4 +1,4 @@
-A simple practice project for integrating EmployeesAPI to EmployeesWebApp using .NET framework. This project utilize Backend logic for operations in client-side such as utilizing Data Transfer Object(DTO), repository pattern, filters, pagination and SQL server. This project depends upon EmployeesAPI for Models, StaffDBContext and DTOs.
+A simple practice project for integrating EmployeesAPI to EmployeesWebApp using .NET core. This project utilize Backend logic for operations in client-side such as utilizing Data Transfer Object(DTO), repository pattern, filters, pagination and SQL server. This project depends upon EmployeesAPI for Models, StaffDBContext and DTOs.
 
 To run this project, clone the repository and also [EmployeesAPI](https://github.com/fermi6-626/EmployeesAPI.git) repository, open it in Visual Studio or VSCode. You have to add reference from API to the EmployeesWebApp:
 
